@@ -8,6 +8,8 @@
 
 using namespace std;
 
+/*ola*/
+
 const int ALPHABET_SIZE = 26;
 
 // trie node
