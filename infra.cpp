@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include "./csv-parser/parser.hpp"
+#include "./external/csv-parser.hpp"
 #include "./trie.cpp"
 #include "./hashTable.cpp"
 
@@ -62,29 +62,28 @@ int printResult(TrieNode *result, HashTable data, int maxCount = 0)
     return maxCount;
 }
 
-int main()
-{
-    clock_t start_clock, end_clock;
+// int main()
+// {
+//     clock_t start_clock, end_clock;
 
-    start_clock = clock();
+//     start_clock = clock();
 
-    HashTable table;
-    TrieStructure searchTree;
-
-
-    getPlayersData(searchTree, &table);
-    getRatingsHashTable(&table);
-
-    end_clock = clock();
-
-    std::cout << "====================================================" << std::endl;
-    std::cout << "pre-proccessing time: "<< (end_clock - start_clock) / (double)CLOCKS_PER_SEC << std::endl;
-    std::cout << "====================================================" << std::endl;
+//     HashTable table;
+//     TrieStructure searchTree;
 
 
-    TrieNode *result = searchTree.search("Sergio");
+//     getPlayersData(searchTree, &table);
+//     getRatingsHashTable(&table);
 
-    printResult(result, table);
+//     end_clock = clock();
 
-    return 0;
-}
+//     std::cout << "====================================================" << std::endl;
+//     std::cout << "pre-proccessing time: "<< (end_clock - start_clock) / (double)CLOCKS_PER_SEC << std::endl;
+//     std::cout << "====================================================" << std::endl;
+
+//     TrieNode *result = searchTree.search("Sergio");
+
+//     printResult(result, table);
+
+//     return 0;
+// }
