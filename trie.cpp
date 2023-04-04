@@ -17,8 +17,6 @@ struct TrieNode
 
     // sofifa_id
     string sofifa_id;
-    string playerName;
-    string positions;
     // isEndOfWord is true if the node represents
     // end of a word
     bool isEndOfWord;
@@ -72,13 +70,13 @@ public:
     // If not present, inserts key into trie
     // If the key is prefix of trie node, just
     // marks leaf node
-    void insert(string key, string sofifa_id, string positions)
+    void insert(string sofifa_id, string name)
     {
         struct TrieNode *pCrawl = trie;
-        int strSize = key.length();
+        int strSize = name.length();
         for (int i = 0; i < strSize; i++)
         {
-            int index = tolower(key[i]) - 'a';
+            int index = tolower(name[i]) - 'a';
             if (index < 0 || index >= 26)
                 continue;
             if (!pCrawl->children[index])
@@ -93,8 +91,6 @@ public:
         pCrawl->isEndOfWord = true;
         // add sofifa_id
         pCrawl->sofifa_id = sofifa_id;
-        pCrawl->positions = positions;
-        pCrawl->playerName = key;
     }
 
     void print()
@@ -104,7 +100,7 @@ public:
 
     // Returns true if key presents in trie, else
     // false
-    TrieNode* search(string key)
+    TrieNode *search(string key)
     {
         struct TrieNode *pCrawl = trie;
         int strSize = key.length();
@@ -113,7 +109,8 @@ public:
             int index = tolower(key[i]) - 'a';
             if (index < 0 || index >= 26)
                 continue;
-            if (!pCrawl->children[index]){
+            if (!pCrawl->children[index])
+            {
                 return NULL;
             }
 

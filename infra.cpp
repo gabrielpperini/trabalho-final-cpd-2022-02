@@ -7,9 +7,8 @@
 
 using namespace aria::csv;
 
-TrieStructure getPlayersTrie()
+void getPlayersData(TrieStructure trie, HashTable *table)
 {
-    TrieStructure data;
 
     std::ifstream f("./data/players.csv");
     CsvParser parser(f);
@@ -18,15 +17,13 @@ TrieStructure getPlayersTrie()
     for (auto &row : parser)
     {
         // std:cout << row.at(1) << "\n";
-        data.insert(row.at(1), row.at(0), row.at(2));
+        trie.insert(row.at(0), row.at(1));
+        table->insert(row.at(0), row.at(1), row.at(2));
     }
-
-    return data;
 }
 
-HashTable getRatingsHashTable()
+void getRatingsHashTable(HashTable *table)
 {
-    HashTable table;
     // std::ifstream f("./data/rating.csv");
     std::ifstream f("./data/minirating.csv");
     CsvParser parser(f);
@@ -36,18 +33,8 @@ HashTable getRatingsHashTable()
     {
         float rating = std::stof(row.at(2));
         string fifaId = row.at(1);
-
-        if (table.search(fifaId).count == -1)
-        {
-            table.insert(fifaId, rating);
-        }
-        else
-        {
-            table.addRating(fifaId, rating);
-        }
+        table->addRating(fifaId, rating);
     }
-
-    return table;
 }
 
 int printResult(TrieNode *result, HashTable data, int maxCount = 0)
@@ -57,13 +44,14 @@ int printResult(TrieNode *result, HashTable data, int maxCount = 0)
 
     if (result->isEndOfWord)
     {
-        ItemData ratingData = data.search(result->sofifa_id);
+        ItemData playerData = data.search(result->sofifa_id);
 
         std::cout << setw(10) << result->sofifa_id << " |";
-        std::cout << setw(40) << result->playerName << " |";
-        std::cout << setw(15) << result->positions << " |";
-        std::cout << setw(8) << setprecision(2) << ratingData.rating << " |";
-        std::cout << setw(8) << ratingData.count << " |" << endl;
+        std::cout << setw(40) << playerData.name << " |";
+        std::cout << setw(15) << playerData.player_positions << " |";
+        std::cout << setw(8) << setprecision(2) << playerData.rating << " |";
+        std::cout << setw(8) << playerData.count << " |";
+        std::cout << endl;
         maxCount++;
     }
 
@@ -76,15 +64,27 @@ int printResult(TrieNode *result, HashTable data, int maxCount = 0)
 
 int main()
 {
-    HashTable table = getRatingsHashTable();
-    // TrieStructure data = getPlayersTrie();
+    clock_t start_clock, end_clock;
 
-    std::cout << table.inserts << std::endl;
-    std::cout << table.adds << std::endl;
+    start_clock = clock();
 
-    // TrieNode *result = data.search("Sergio");
+    HashTable table;
+    TrieStructure searchTree;
 
-    // printResult(result, table);
+
+    getPlayersData(searchTree, &table);
+    getRatingsHashTable(&table);
+
+    end_clock = clock();
+
+    std::cout << "====================================================" << std::endl;
+    std::cout << "pre-proccessing time: "<< (end_clock - start_clock) / (double)CLOCKS_PER_SEC << std::endl;
+    std::cout << "====================================================" << std::endl;
+
+
+    TrieNode *result = searchTree.search("Sergio");
+
+    printResult(result, table);
 
     return 0;
 }
