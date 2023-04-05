@@ -82,7 +82,8 @@ int main()
         }
         else
         {
-            wcerr << endl << L"Comando Inválido!" ;
+            wcerr << endl
+                  << L"Comando Inválido!";
         }
 
         cout << "\n\nClique em qualquer tecla para continuar...";

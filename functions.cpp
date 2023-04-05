@@ -143,6 +143,8 @@ void topN(int top, vector<string> args, HashTable table, TrieStructure searchTre
             std::cout << setw(8) << vetor[i].count << " |";
             std::cout << endl;
         }
+
+        // quicksort(vetor, 0, top);
     }
 }
 
