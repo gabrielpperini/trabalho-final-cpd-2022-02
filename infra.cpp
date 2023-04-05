@@ -24,8 +24,8 @@ void getPlayersData(TrieStructure trie, HashTable *table)
 
 void getRatingsHashTable(HashTable *table)
 {
-    std::ifstream f("./data/rating.csv");
-    // std::ifstream f("./data/minirating.csv");
+    // std::ifstream f("./data/rating.csv");
+    std::ifstream f("./data/minirating.csv");
     CsvParser parser(f);
 
     parser.begin();
@@ -46,17 +46,19 @@ int printResult(TrieNode *result, HashTable data, int maxCount = 0)
     {
         PlayerData playerData = data.search(result->sofifa_id);
 
+        std::cout << setfill(' ');
         std::cout << setw(10) << result->sofifa_id << " |";
         std::cout << setw(40) << playerData.name << " |";
-        std::cout << setw(15) << playerData.player_positions << " |";
+        std::cout << setw(20) << playerData.player_positions << " |";
         std::cout << setw(8) << setprecision(2) << playerData.rating << " |";
-        std::cout << setw(8) << playerData.count << " |";
+        std::cout << setw(7) << playerData.count << " |";
         std::cout << endl;
         maxCount++;
     }
 
     for (int i = 0; i < ALPHABET_SIZE; i++)
     {
+        if(!result->children[i]) continue;
         maxCount = printResult(result->children[i], data, maxCount);
     }
     return maxCount;
@@ -70,7 +72,6 @@ int printResult(TrieNode *result, HashTable data, int maxCount = 0)
 
 //     HashTable table;
 //     TrieStructure searchTree;
-
 
 //     getPlayersData(searchTree, &table);
 //     getRatingsHashTable(&table);
