@@ -24,8 +24,8 @@ void getPlayersData(TrieStructure trie, HashTable *table)
 
 void getRatingsHashTable(HashTable *table)
 {
-    // std::ifstream f("./data/rating.csv");
-    std::ifstream f("./data/minirating.csv");
+    std::ifstream f("./data/rating.csv");
+    // std::ifstream f("./data/minirating.csv");
     CsvParser parser(f);
 
     parser.begin();
@@ -33,7 +33,7 @@ void getRatingsHashTable(HashTable *table)
     {
         float rating = std::stof(row.at(2));
         string fifaId = row.at(1);
-        table->addRating(fifaId, rating);
+        table->addRating(fifaId, rating, row.at(0));
     }
 }
 
@@ -44,7 +44,7 @@ int printResult(TrieNode *result, HashTable data, int maxCount = 0)
 
     if (result->isEndOfWord)
     {
-        ItemData playerData = data.search(result->sofifa_id);
+        PlayerData playerData = data.search(result->sofifa_id);
 
         std::cout << setw(10) << result->sofifa_id << " |";
         std::cout << setw(40) << playerData.name << " |";
