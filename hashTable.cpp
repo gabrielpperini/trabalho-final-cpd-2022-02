@@ -46,8 +46,6 @@ public:
     // constructor
     HashTable() : players(BUCKET_COUNT), users(BUCKET_COUNT) {}
 
-    
-
     // insert a key-value pair into the hash table
     void insert(const std::string &sofifa_id, const std::string &name, const std::string &player_positions)
     {
