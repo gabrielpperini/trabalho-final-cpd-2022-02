@@ -61,7 +61,7 @@ int main()
         }
         else if (command == "user")
         {
-            user(args, table, searchTree);
+            user(args, table);
         }
         else if (command.substr(0, 3) == "top")
         {
