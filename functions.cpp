@@ -62,15 +62,15 @@ void topN(int top, vector<string> args, HashTable table, TrieStructure searchTre
     int pos=0;
     std::vector<PlayerData> vetor(top);
 
-    for (int i = 0; i < table.buckets.size(); ++i) {
-        for (auto it = table.buckets[i].begin(); it != table.buckets[i].end(); ++it) {
+    for (int i = 0; i < table.players.size(); ++i) {
+        for (auto it = table.players[i].begin(); it != table.players[i].end(); ++it) {
             aux=*it;
             size_t pos = 0;
-            if((pos=aux.player_positions.find(args[0]),pos) != std::string::npos){
-                list.push_back(*it);
+            if((pos = aux.player_positions.find(args[0], pos)) != std::string::npos){
+                list.push_back(aux);
                 
-            }
-            
+                
+            }            
         }
     }   
     
@@ -101,6 +101,7 @@ void topN(int top, vector<string> args, HashTable table, TrieStructure searchTre
                 ++interador;
             }else ++interador;
         }
+        
 
         for (int i = 0; i < top; i++)
         {
@@ -110,11 +111,9 @@ void topN(int top, vector<string> args, HashTable table, TrieStructure searchTre
             std::cout << setw(8) << setprecision(2) << vetor[i].rating << " |";
             std::cout << setw(8) << vetor[i].count << " |";
             std::cout << endl;
-            }
-        
+        }
 
-
-
+        //quicksort(vetor, 0, top);
     }
 }
 

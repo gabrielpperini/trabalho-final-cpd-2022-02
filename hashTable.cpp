@@ -24,10 +24,7 @@ private:
     // number of buckets in the hash table
     static const int BUCKET_COUNT = 30011;
 
-    // players vector
-    std::vector<std::list<PlayerData>> players;
-    // users vector
-    std::vector<std::list<UserData>> users;
+    
 
     // hash function for strings (sdbm hash)
     unsigned long hash(const std::string &key)
@@ -41,8 +38,11 @@ private:
     }
 
 public:
-    // bucket vector
-    std::vector<std::list<PlayerData>> buckets;
+    // players vector
+    std::vector<std::list<PlayerData>> players;
+    // users vector
+    std::vector<std::list<UserData>> users;
+    
     // constructor
     HashTable() : players(BUCKET_COUNT), users(BUCKET_COUNT) {}
 
