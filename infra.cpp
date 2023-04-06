@@ -37,6 +37,21 @@ void getRatingsHashTable(HashTable *table)
     }
 }
 
+void getTagsHashTable(HashTable *table)
+{
+    std::ifstream f("./data/tags.csv");
+    CsvParser parser(f);
+
+    parser.begin();
+    for (auto &row : parser)
+    {
+        string user_id = row.at(1);
+        string sofifa_id = row.at(1);
+        string tag = row.at(2);
+        table->insertTag(tag, user_id, sofifa_id);
+    }
+}
+
 int printResult(TrieNode *result, HashTable data, int maxCount = 0)
 {
     if (!result || maxCount >= 10)

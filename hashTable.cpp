@@ -17,6 +17,11 @@ struct UserData
     std::string user_id;
     std::list<pair<float, PlayerData *>> players;
 };
+struct TagData
+{
+    std::string tag;
+    std::vector<std::string> sofifa_ids;
+};
 
 class HashTable
 {
@@ -39,9 +44,11 @@ public:
     std::vector<std::list<PlayerData>> players;
     // users vector
     std::vector<std::list<UserData>> users;
+    // tags vector
+    std::vector<std::list<TagData>> tags;
 
     // constructor
-    HashTable() : players(BUCKET_COUNT), users(BUCKET_COUNT) {}
+    HashTable() : players(BUCKET_COUNT), users(BUCKET_COUNT), tags(BUCKET_COUNT) {}
 
     // insert a key-value pair into the hash table
     void insert(const std::string &sofifa_id, const std::string &name, const std::string &player_positions)
@@ -78,8 +85,23 @@ public:
                 return data;
             }
         }
-        // key not found, return {-1, -1} (or some other error value)
+        // key not found
         UserData data = {"", {}};
+        return data;
+    }
+
+    TagData searchTag(const std::string &tag)
+    {
+        unsigned long index = hash(tag);
+        for (auto data : tags[index])
+        {
+            if (data.tag == tag)
+            {
+                return data;
+            }
+        }
+        // key not found
+        TagData data = {"", {}};
         return data;
     }
 
@@ -124,6 +146,36 @@ public:
             }
         }
         // key not found, do nothing (or throw an exception)
+    }
+
+    void insertTag(const std::string &tag, const std::string &user_id, const std::string &sofifa_id)
+    {
+        // calculate hash index for the tag
+        unsigned long index = hash(tag);
+
+        // check if the tag is already associated with a user
+        bool found = false;
+        for (auto &data : tags[index])
+        {
+            if (data.tag == tag)
+            {
+                // the tag already exists, add the sofifa_id to the vector of sofifa_ids
+                if (std::find(data.sofifa_ids.begin(), data.sofifa_ids.end(), sofifa_id) == data.sofifa_ids.end())
+                {
+                    data.sofifa_ids.push_back(sofifa_id);
+                }
+                found = true;
+                break;
+            }
+        }
+
+        // the tag doesn't exist, add a new TagData to the list of tags
+        if (!found)
+        {
+            std::vector<std::string> sofifa_ids{sofifa_id};
+            TagData data = {tag, sofifa_ids};
+            tags[index].push_back(data);
+        }
     }
 
     void printBuckets()

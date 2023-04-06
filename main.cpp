@@ -42,6 +42,7 @@ int main()
 
     getPlayersData(searchTree, &table);
     getRatingsHashTable(&table);
+    getTagsHashTable(&table);
 
     end_clock = clock();
 
@@ -70,7 +71,7 @@ int main()
         }
         else if (command == "tags")
         {
-            tags(args, table, searchTree);
+            tags(args, table);
         }
         else if (command == "help")
         {

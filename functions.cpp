@@ -100,10 +100,9 @@ void topN(int top, vector<string> args, HashTable table, TrieStructure searchTre
     }
     else
     {
-        
+
         Quicksort sorting("ASC");
         sorting.sort(&list, list.size());
-
 
         for (int i = 0; i < top; i++)
         {
@@ -120,9 +119,65 @@ void topN(int top, vector<string> args, HashTable table, TrieStructure searchTre
     }
 }
 
-void tags(vector<string> args, HashTable table, TrieStructure searchTree)
+void tags(vector<string> args, HashTable table)
 {
-    wcout << L"funcão de pesquisa de player por tags" << endl;
+    string firstArg = args[0];
+    args.erase(args.begin());
+
+    TagData data = table.searchTag(firstArg);
+    std::vector<string> fifa_ids = data.sofifa_ids;
+
+    for (auto &&arg : args)
+    {
+        TagData data = table.searchTag(arg);
+        std::vector<string> fifa_ids_temp = {};
+        for (auto &&fifaId : data.sofifa_ids)
+        {
+            if (std::find(fifa_ids.begin(), fifa_ids.end(), fifaId) != fifa_ids.end())
+            {
+                fifa_ids_temp.push_back(fifaId);
+            }
+        }
+        fifa_ids.clear();
+        fifa_ids = fifa_ids_temp;
+    }
+
+    if (fifa_ids.empty())
+    {
+        cout << "Nenhum resultado encontrado!" << endl;
+    }
+    else
+    {
+        cout << endl;
+
+        cout << setfill(' ');
+        cout << setw(10) << "so_fifa_id"
+             << " |";
+        cout << setw(40) << "name"
+             << " |";
+        cout << setw(20) << "player_positions"
+             << " |";
+        cout << setw(8) << "rating"
+             << " |";
+        cout << setw(7) << "count"
+             << " |";
+        cout << endl;
+        cout << setfill('-') << setw(95) << "" << endl;
+        cout << setfill(' ');
+
+        for (auto &&id : fifa_ids)
+        {
+            PlayerData playerData = table.search(id);
+
+            std::cout << setfill(' ');
+            std::cout << setw(10) << playerData.sofifa_id << " |";
+            std::cout << setw(40) << playerData.name << " |";
+            std::cout << setw(20) << playerData.player_positions << " |";
+            std::cout << setw(8) << setprecision(2) << playerData.rating << " |";
+            std::cout << setw(7) << playerData.count << " |";
+            std::cout << endl;
+        }
+    }
 }
 
 void help()
