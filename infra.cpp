@@ -45,10 +45,9 @@ void getTagsHashTable(HashTable *table)
     parser.begin();
     for (auto &row : parser)
     {
-        string user_id = row.at(1);
         string sofifa_id = row.at(1);
         string tag = row.at(2);
-        table->insertTag(tag, user_id, sofifa_id);
+        table->insertTag(tag, sofifa_id);
     }
 }
 
@@ -78,6 +77,23 @@ int printResult(TrieNode *result, HashTable data, int maxCount = 0)
         maxCount = printResult(result->children[i], data, maxCount);
     }
     return maxCount;
+}
+
+void createVectorIDS(TrieNode *result, std::vector<std::string> *v)
+{
+    if (!result)
+        return;
+
+    if (result->isEndOfWord)
+    {
+        v->push_back(result->sofifa_id);
+    }
+
+    for (auto &&s : result->children)
+    {
+        if (s)
+            createVectorIDS(s, v);
+    }
 }
 
 // int main()

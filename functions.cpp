@@ -23,7 +23,26 @@ void player(vector<string> args, HashTable table, TrieStructure searchTree)
 
     TrieNode *result = searchTree.search(args[0]);
 
-    printResult(result, table);
+    std::vector<std::string> v;
+    createVectorIDS(result, &v);
+
+    int j = 0;
+    for (auto &&i : v)
+    {
+        PlayerData playerData = table.search(i);
+
+        std::cout << setfill(' ');
+        std::cout << setw(10) << playerData.sofifa_id << " |";
+        std::cout << setw(40) << playerData.name << " |";
+        std::cout << setw(20) << playerData.player_positions << " |";
+        std::cout << setw(8) << setprecision(2) << playerData.rating << " |";
+        std::cout << setw(7) << playerData.count << " |";
+        std::cout << endl;
+        j++;
+        if(j > 9) break;
+    }
+
+    // printResult(result, table);
 }
 
 void user(vector<string> args, HashTable table)
@@ -47,7 +66,9 @@ void user(vector<string> args, HashTable table)
     cout << setfill('-') << setw(90) << "" << endl;
     cout << setfill(' ');
 
-    for (size_t i = 0; i < data.players.size(); i++)
+    size_t limit = data.players.size() > 20 ? 20 : data.players.size();
+
+    for (size_t i = 0; i < limit; i++)
     {
         auto p = std::next(std::begin(data.players), i);
 
@@ -67,7 +88,7 @@ void topN(int top, vector<string> args, HashTable table, string ordem)
     PlayerData aux;
     std::vector<PlayerData> vetor(top);
 
-    for (int i = 0; i < table.players.size(); ++i)
+    for (size_t i = 0; i < table.players.size(); ++i)
     {
         for (auto it = table.players[i].begin(); it != table.players[i].end(); ++it)
         {
@@ -108,7 +129,7 @@ void topN(int top, vector<string> args, HashTable table, string ordem)
         cout << setfill(' ');
 
         int j = 0;
-        int li = 0;
+        size_t li = 0;
         while (j < top && li < list.size())
         {
             if (list[li].count >= 1000)
@@ -125,7 +146,8 @@ void topN(int top, vector<string> args, HashTable table, string ordem)
             li++;
         }
 
-        if(!j) cout << "Nenhum dado encontrado!" <<  endl;
+        if (!j)
+            cout << "Nenhum dado encontrado!" << endl;
     }
 }
 
@@ -192,5 +214,20 @@ void tags(vector<string> args, HashTable table)
 
 void help()
 {
-    wcout << L"funcão de help" << endl;
+    wcout << L"Menu de Ajuda" << endl;
+    std::vector<std::vector<std::wstring>> helpVector = {
+        {L"player <name or prefix>", L"Retorna uma lista de jogadores devido a pesquisa do nome"},
+        {L"user <userID>", L"Retorna as maiores 20 notas dadas pelo usuário e os jogadores respectivos"},
+        {L"top<N> <position>", L"Retorna os N melhores jogadores avaliados de certa posição com pelo menos 1000 avaliações"},
+        {L"low<N> <position>", L"Retorna os N piores jogadores avaliados de certa posição com pelo menos 1000 avaliações"},
+        {L"tags <list of tags>", L"Retorna todos os jogadores que tem as tags requisitadas"},
+        {L"help", L"Abre o menu de ajuda"},
+        {L"exit ou quit", L"Encerra o programa"},
+    };
+
+    for (auto &&hv : helpVector)
+    {
+        wcout << left << setw(30) << hv[0];
+        wcout << hv[1] << endl;
+    }
 }

@@ -148,7 +148,7 @@ public:
         // key not found, do nothing (or throw an exception)
     }
 
-    void insertTag(const std::string &tag, const std::string &user_id, const std::string &sofifa_id)
+    void insertTag(const std::string &tag, const std::string &sofifa_id)
     {
         // calculate hash index for the tag
         unsigned long index = hash(tag);
