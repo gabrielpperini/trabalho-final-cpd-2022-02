@@ -67,7 +67,14 @@ int main()
         else if (command.substr(0, 3) == "top")
         {
             int number = stof(command.substr(3));
-            topN(number, args, table, searchTree);
+
+            topN(number, args, table, "DESC");
+        }
+        else if (command.substr(0, 3) == "low")
+        {
+            int number = stof(command.substr(3));
+
+            topN(number, args, table, "ASC");
         }
         else if (command == "tags")
         {

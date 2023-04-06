@@ -60,25 +60,11 @@ void user(vector<string> args, HashTable table)
     }
 }
 
-int menorElementoPos(vector<PlayerData> vetor)
-{
-    int posicaoMenor = 0;
-    for (int i = 1; i < vetor.size(); ++i)
-    {
-        if (vetor[i].rating < vetor[posicaoMenor].rating)
-        {
-            posicaoMenor = i; // Atualiza a posição do menor elemento
-        }
-    }
-    return posicaoMenor; // Retorna a posição do menor elemento
-}
-
-void topN(int top, vector<string> args, HashTable table, TrieStructure searchTree)
+void topN(int top, vector<string> args, HashTable table, string ordem)
 {
     std::vector<PlayerData> list;
 
     PlayerData aux;
-    int pos = 0;
     std::vector<PlayerData> vetor(top);
 
     for (int i = 0; i < table.players.size(); ++i)
@@ -100,19 +86,26 @@ void topN(int top, vector<string> args, HashTable table, TrieStructure searchTre
     }
     else
     {
-
-        Quicksort sorting("ASC");
+        
+        Quicksort sorting(ordem);
         sorting.sort(&list, list.size());
 
+        int j=0;
         for (int i = 0; i < top; i++)
         {
-            std::cout << setfill(' ');
-            std::cout << setw(10) << list[i].sofifa_id << " |";
-            std::cout << setw(40) << list[i].name << " |";
-            std::cout << setw(15) << list[i].player_positions << " |";
-            std::cout << setw(8) << setprecision(2) << list[i].rating << " |";
-            std::cout << setw(8) << list[i].count << " |";
-            std::cout << endl;
+            if(list[j].count > 999){
+                std::cout << setfill(' ');
+                std::cout << setw(10) << list[j].sofifa_id << " |";
+                std::cout << setw(40) << list[j].name << " |";
+                std::cout << setw(15) << list[j].player_positions << " |";
+                std::cout << setw(8) << setprecision(2) << list[j].rating << " |";
+                std::cout << setw(8) << list[j].count << " |";
+                std::cout << endl;
+            }else{
+                i--;
+            }
+            j++;
+            
         }
 
         // quicksort(vetor, 0, top);
