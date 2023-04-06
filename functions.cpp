@@ -26,7 +26,6 @@ void player(vector<string> args, HashTable table, TrieStructure searchTree)
     std::vector<std::string> v;
     createVectorIDS(result, &v);
 
-    int j = 0;
     for (auto &&i : v)
     {
         PlayerData playerData = table.search(i);
@@ -35,11 +34,9 @@ void player(vector<string> args, HashTable table, TrieStructure searchTree)
         std::cout << setw(10) << playerData.sofifa_id << " |";
         std::cout << setw(40) << playerData.name << " |";
         std::cout << setw(20) << playerData.player_positions << " |";
-        std::cout << setw(8) << setprecision(2) << playerData.rating << " |";
+        std::cout << setw(8) << playerData.rating << " |";
         std::cout << setw(7) << playerData.count << " |";
         std::cout << endl;
-        j++;
-        if(j > 9) break;
     }
 
     // printResult(result, table);
@@ -138,7 +135,7 @@ void topN(int top, vector<string> args, HashTable table, string ordem)
                 std::cout << setw(10) << list[li].sofifa_id << " |";
                 std::cout << setw(40) << list[li].name << " |";
                 std::cout << setw(20) << list[li].player_positions << " |";
-                std::cout << setw(8) << setprecision(2) << list[li].rating << " |";
+                std::cout << setw(8) << list[li].rating << " |";
                 std::cout << setw(7) << list[li].count << " |";
                 std::cout << endl;
                 j++;
@@ -205,7 +202,7 @@ void tags(vector<string> args, HashTable table)
             std::cout << setw(10) << playerData.sofifa_id << " |";
             std::cout << setw(40) << playerData.name << " |";
             std::cout << setw(20) << playerData.player_positions << " |";
-            std::cout << setw(8) << setprecision(2) << playerData.rating << " |";
+            std::cout << setw(8) << playerData.rating << " |";
             std::cout << setw(7) << playerData.count << " |";
             std::cout << endl;
         }

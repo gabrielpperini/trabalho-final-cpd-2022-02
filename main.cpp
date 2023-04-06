@@ -30,7 +30,7 @@ vector<string> getCommand()
 int main()
 {
     system("cls");
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "en-US");
 
     clock_t start_clock, end_clock;
 

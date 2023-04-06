@@ -64,7 +64,7 @@ int printResult(TrieNode *result, HashTable data, int maxCount = 0)
         std::cout << setw(10) << result->sofifa_id << " |";
         std::cout << setw(40) << playerData.name << " |";
         std::cout << setw(20) << playerData.player_positions << " |";
-        std::cout << setw(8) << setprecision(2) << playerData.rating << " |";
+        std::cout << setw(8) << playerData.rating << " |";
         std::cout << setw(7) << playerData.count << " |";
         std::cout << endl;
         maxCount++;
