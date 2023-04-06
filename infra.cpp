@@ -24,8 +24,8 @@ void getPlayersData(TrieStructure trie, HashTable *table)
 
 void getRatingsHashTable(HashTable *table)
 {
-    // std::ifstream f("./data/rating.csv");
-    std::ifstream f("./data/minirating.csv");
+    std::ifstream f("./data/rating.csv");
+    // std::ifstream f("./data/minirating.csv");
     CsvParser parser(f);
 
     parser.begin();

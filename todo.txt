@@ -1,0 +1,4 @@
+- limite user
+- verificar tempo do pre processamento
+- melhorar metodo player
+- metodo help

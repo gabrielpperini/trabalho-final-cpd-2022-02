@@ -86,29 +86,46 @@ void topN(int top, vector<string> args, HashTable table, string ordem)
     }
     else
     {
-        
+
         Quicksort sorting(ordem);
         sorting.sort(&list, list.size());
 
-        int j=0;
-        for (int i = 0; i < top; i++)
+        cout << endl;
+
+        cout << setfill(' ');
+        cout << setw(10) << "so_fifa_id"
+             << " |";
+        cout << setw(40) << "name"
+             << " |";
+        cout << setw(20) << "player_positions"
+             << " |";
+        cout << setw(8) << "rating"
+             << " |";
+        cout << setw(7) << "count"
+             << " |";
+        cout << endl;
+        cout << setfill('-') << setw(95) << "" << endl;
+        cout << setfill(' ');
+
+        int j = 0;
+        int li = 0;
+        while (j < top && li < list.size())
         {
-            if(list[j].count > 999){
+            if (list[li].count >= 1000)
+            {
                 std::cout << setfill(' ');
-                std::cout << setw(10) << list[j].sofifa_id << " |";
-                std::cout << setw(40) << list[j].name << " |";
-                std::cout << setw(15) << list[j].player_positions << " |";
-                std::cout << setw(8) << setprecision(2) << list[j].rating << " |";
-                std::cout << setw(8) << list[j].count << " |";
+                std::cout << setw(10) << list[li].sofifa_id << " |";
+                std::cout << setw(40) << list[li].name << " |";
+                std::cout << setw(20) << list[li].player_positions << " |";
+                std::cout << setw(8) << setprecision(2) << list[li].rating << " |";
+                std::cout << setw(7) << list[li].count << " |";
                 std::cout << endl;
-            }else{
-                i--;
+                j++;
             }
-            j++;
-            
+            li++;
         }
 
-        // quicksort(vetor, 0, top);
+        if(!j) cout << "Nenhum dado encontrado!" <<  endl;
     }
 }
 
