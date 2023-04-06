@@ -20,7 +20,7 @@ struct UserData
 
 class HashTable
 {
-private:
+public:
     // number of buckets in the hash table
     static const int BUCKET_COUNT = 30011;
 
@@ -35,7 +35,6 @@ private:
         return hash % BUCKET_COUNT;
     }
 
-public:
     // players vector
     std::vector<std::list<PlayerData>> players;
     // users vector

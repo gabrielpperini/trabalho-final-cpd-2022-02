@@ -1,4 +1,4 @@
-#include "infra.cpp"
+#include "quicksort.cpp"
 
 using namespace std;
 
@@ -75,15 +75,15 @@ int menorElementoPos(vector<PlayerData> vetor)
 
 void topN(int top, vector<string> args, HashTable table, TrieStructure searchTree)
 {
-    std::list<PlayerData> list;
+    std::vector<PlayerData> list;
 
     PlayerData aux;
     int pos = 0;
     std::vector<PlayerData> vetor(top);
 
-    for (int i = 0; i < table.buckets.size(); ++i)
+    for (int i = 0; i < table.players.size(); ++i)
     {
-        for (auto it = table.buckets[i].begin(); it != table.buckets[i].end(); ++it)
+        for (auto it = table.players[i].begin(); it != table.players[i].end(); ++it)
         {
             aux = *it;
             size_t pos = 0;
@@ -100,47 +100,19 @@ void topN(int top, vector<string> args, HashTable table, TrieStructure searchTre
     }
     else
     {
-        auto interador = list.begin();
-        int i = 0;
-        while (interador != list.end())
-        {
-            if (i < top)
-            {
-                if (std::next(interador) != list.end())
-                {
-                    aux = *interador;
-                    if (aux.count > 2)
-                    {
-                        vetor[i] = *interador;
-                        i++;
-                    }
-                    ++interador;
-                }
-            }
-            else if (std::next(interador) != list.end())
-            {
-                aux = *interador;
-                pos = menorElementoPos(vetor);
-                if (aux.count > 2)
-                {
-                    if (vetor[pos].rating < aux.rating)
-                    {
-                        vetor[pos] = *interador;
-                    }
-                }
-                ++interador;
-            }
-            else
-                ++interador;
-        }
+        
+        Quicksort sorting("ASC");
+        sorting.sort(&list, list.size());
+
 
         for (int i = 0; i < top; i++)
         {
-            std::cout << setw(10) << vetor[i].sofifa_id << " |";
-            std::cout << setw(40) << vetor[i].name << " |";
-            std::cout << setw(15) << vetor[i].player_positions << " |";
-            std::cout << setw(8) << setprecision(2) << vetor[i].rating << " |";
-            std::cout << setw(8) << vetor[i].count << " |";
+            std::cout << setfill(' ');
+            std::cout << setw(10) << list[i].sofifa_id << " |";
+            std::cout << setw(40) << list[i].name << " |";
+            std::cout << setw(15) << list[i].player_positions << " |";
+            std::cout << setw(8) << setprecision(2) << list[i].rating << " |";
+            std::cout << setw(8) << list[i].count << " |";
             std::cout << endl;
         }
 

@@ -65,49 +65,6 @@ int printResult(TrieNode *result, HashTable data, int maxCount = 0)
     return maxCount;
 }
 
-void troca(int i, int j, vector<PlayerData> lista)
-{
-    PlayerData aux;
-    aux = lista[i];
-    lista[i] = lista[j];
-    lista[j] = aux;
-}
-// função para ordenar uma lista usando o algoritmo QuickSort
-void quicksort(vector<PlayerData> lista, int inicio, int fim)
-{
-    int i = inicio;
-    int j = fim;
-    PlayerData pivo = lista[(inicio + fim) / 2]; // escolhe um elemento aleatório como pivô
-
-    // particiona a lista em dois subconjuntos: elementos menores que o pivô e elementos maiores que o pivô
-    while (i <= j)
-    {
-        while (lista[i].rating < pivo.rating)
-        {
-            i++;
-        }
-        while (lista[j].rating > pivo.rating)
-        {
-            j--;
-        }
-        if (i <= j)
-        {
-            troca(i, j, lista);
-            i++;
-            j--;
-        }
-    }
-    // recursivamente ordena os subconjuntos
-    if (inicio < j)
-    {
-        quicksort(lista, inicio, j);
-    }
-    if (i < fim)
-    {
-        quicksort(lista, i, fim);
-    }
-}
-
 // int main()
 // {
 //     clock_t start_clock, end_clock;
